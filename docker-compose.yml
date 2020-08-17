@@ -1,0 +1,75 @@
+# /opt/docker-compose.yml
+---
+version: '3.4'
+services:
+  plex:
+    image: plexinc/pms-docker
+    container_name: plex-beast
+    volumes:
+      - /opt/appdata/plex:/config
+      - /mnt/storage:/data
+    network_mode: host
+    restart: always
+    environment:
+      - PUID
+      - PGID
+  
+  plexpy:
+    env_file: docker-id.env
+    image: linuxserver/plexpy
+    container_name: plexpy-beast
+    depends_on:
+      - plex
+    volumes:
+      - /opt/appdata/plexpy:/config
+      - /opt/appdata/plex/Library/Application\ Support/Plex\ Media\ Server/Logs:/logs:ro
+    ports:
+      - 27029:8181
+    links:
+      - plex
+    restart: always
+    environment:
+      - PUID
+      - PGID
+  
+  couchpotato:
+    image: linuxserver/couchpotato
+    container_name: couchpotato
+    environment:
+      - PUID
+      - PGID
+      - TZ
+      - UMASK_SET
+    volumes:
+      - /opt/appdata/couchpotato:/config
+      - /mnt/disk2/downloads/couchpotato:/downloads
+      - /mnt/disk3/movies:/movies
+    ports:
+      - 5050:5050
+    restart: unless-stopped
+  
+  transmission:
+    image: linuxserver/transmission
+    container_name: transmission
+    environment:
+      - PUID
+      - PGID
+      - TZ
+    volumes:
+      - /opt/appdata/transmission:/config
+      - /mnt/disk2/downloads/transmission:/downloads
+      - /mnt/storage/movies:/movies
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
+  
+  # WIP
+  # minecraft:
+  #   image: itzg/minecraft-server
+  #   container: minecraft-beast
+  #   volumes:
+  #     - /mnt/disk1:/data
+  #   network_mode: host
+  #   restart: 
