@@ -3,8 +3,8 @@
 version: '3.4'
 services:
   plex:
-    image: plexinc/pms-docker
     container_name: plex-beast
+    image: plexinc/pms-docker
     volumes:
       - /opt/appdata/plex:/config
       - /mnt/storage:/data
@@ -15,9 +15,9 @@ services:
       - PGID
   
   plexpy:
+    container_name: plexpy-beast
     env_file: docker-variables.env
     image: linuxserver/plexpy
-    container_name: plexpy-beast
     depends_on:
       - plex
     volumes:
@@ -33,15 +33,20 @@ services:
       - PGID
   
   minecraft:
+    container_name: mc-beast
     env_file: docker-variables.env
     image: itzg/minecraft-server
-    container_name: mc-beast
     ports:
       - "25565:25565"
     volumes:
       - "/mnt/disk1/mc:/data"
     environment:
-      EULA: "TRUE"
+      - DIFFICULTY
+      - OPS
+      - MAX_PLAYERS
+      - SPAWN_PROTECTION
+      - SEED
+      - TZ
     tty: true
     stdin_open: true
     restart: always
