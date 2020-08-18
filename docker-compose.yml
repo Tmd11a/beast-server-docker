@@ -15,7 +15,6 @@ services:
       - PGID
   
   plexpy:
-    env_file: docker-id.env
     image: linuxserver/plexpy
     container_name: plexpy-beast
     depends_on:
