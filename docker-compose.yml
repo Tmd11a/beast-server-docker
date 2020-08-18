@@ -41,8 +41,10 @@ services:
     volumes:
       - "/mnt/disk1/mc:/data"
     environment:
-      EULA: "true"
-    restart: "no"
+      EULA: "TRUE"
+    tty: true
+    stdin_open: true
+    restart: always
 
   # couchpotato:
   #   image: linuxserver/couchpotato
