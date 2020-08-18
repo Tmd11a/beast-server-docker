@@ -41,7 +41,7 @@ services:
     volumes:
       - "/mnt/disk1/mc:/data"
     environment:
-      - EULA="TRUE"
+      - EULA
       - TZ
       - DIFFICULTY
       - OPS
