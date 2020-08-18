@@ -15,6 +15,7 @@ services:
       - PGID
   
   plexpy:
+    env_file: docker-variables.env
     image: linuxserver/plexpy
     container_name: plexpy-beast
     depends_on:
@@ -31,6 +32,24 @@ services:
       - PUID
       - PGID
   
+  minecraft:
+    env_file: docker-variables.env
+    image: itzg/minecraft-server
+    container_name: mc-beast
+    ports:
+      - "25565:25565"
+    volumes:
+      - "/mnt/disk1/mc:/data"
+    environment:
+      - EULA
+      - TZ
+      - DIFFICULTY
+      - OPS
+      - MAX_PLAYERS
+      - SPAWN_PROTECTION
+      - SEED
+    restart: on-failure
+
   # couchpotato:
   #   image: linuxserver/couchpotato
   #   container_name: couchpotato
@@ -63,16 +82,3 @@ services:
   #     - 51413:51413
   #     - 51413:51413/udp
   #   restart: unless-stopped
-  
-  minecraft:
-    image: itzg/minecraft-server
-    container_name: mc-beast
-    ports:
-      - "25565:25565"
-    volumes:
-      - "/mnt/disk1/mc:/data"
-    environment:
-      - EULA
-      - TZ
-      - DIFFICULTY
-    restart: on-failure
