@@ -32,44 +32,48 @@ services:
       - PUID
       - PGID
   
-  couchpotato:
-    image: linuxserver/couchpotato
-    container_name: couchpotato
-    environment:
-      - PUID
-      - PGID
-      - TZ
-      - UMASK_SET
-    volumes:
-      - /opt/appdata/couchpotato:/config
-      - /mnt/disk2/downloads/couchpotato:/downloads
-      - /mnt/disk3/movies:/movies
-    ports:
-      - 5050:5050
-    restart: unless-stopped
-  
-  transmission:
-    image: linuxserver/transmission
-    container_name: transmission
-    environment:
-      - PUID
-      - PGID
-      - TZ
-    volumes:
-      - /opt/appdata/transmission:/config
-      - /mnt/disk2/downloads/transmission:/downloads
-      - /mnt/storage/movies:/movies
-    ports:
-      - 9091:9091
-      - 51413:51413
-      - 51413:51413/udp
-    restart: unless-stopped
-  
-  # WIP
-  # minecraft:
-  #   image: itzg/minecraft-server
-  #   container: minecraft-beast
+  # couchpotato:
+  #   image: linuxserver/couchpotato
+  #   container_name: couchpotato
+  #   environment:
+  #     - PUID
+  #     - PGID
+  #     - TZ
+  #     - UMASK_SET
   #   volumes:
-  #     - /mnt/disk1:/data
-  #   network_mode: host
-  #   restart: 
+  #     - /opt/appdata/couchpotato:/config
+  #     - /mnt/disk2/downloads/couchpotato:/downloads
+  #     - /mnt/disk3/movies:/movies
+  #   ports:
+  #     - 5050:5050
+  #   restart: unless-stopped
+  
+  # transmission:
+  #   image: linuxserver/transmission
+  #   container_name: transmission-beast
+  #   environment:
+  #     - PUID
+  #     - PGID
+  #     - TZ
+  #   volumes:
+  #     - /opt/appdata/transmission:/config
+  #     - /mnt/disk2/downloads/transmission:/downloads
+  #     - /mnt/storage/movies:/movies
+  #   ports:
+  #     - 9091:9091
+  #     - 51413:51413
+  #     - 51413:51413/udp
+  #   restart: unless-stopped
+  
+  minecraft:
+    image: itzg/minecraft-server
+    container_name: mc-beast
+    ports:
+      - "25565:25565"
+    volumes:
+      - "/mnt/disk1/mc:/data"
+    environment:
+      - EULA
+      - TZ
+      - DIFFICULTY
+    restart: on-failure
