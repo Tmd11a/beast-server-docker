@@ -47,6 +47,7 @@ services:
       - SPAWN_PROTECTION
       - SEED
       - TZ
+      - OVERRIDE_SERVER_PROPERTIES
     tty: true
     stdin_open: true
     restart: always
