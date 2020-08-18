@@ -41,13 +41,13 @@ services:
     volumes:
       - "/mnt/disk1/mc:/data"
     environment:
-      - DIFFICULTY
-      - OPS
-      - MAX_PLAYERS
-      - SPAWN_PROTECTION
-      - SEED
-      - TZ
-      - OVERRIDE_SERVER_PROPERTIES
+      EULA: 'true'
+      DIFFICULTY: "hard"
+      OPS: "Tusset"
+      MAX_PLAYERS: 12
+      SPAWN_PROTECTION: 3
+      SEED: -9027231461036664813gi
+      OVERRIDE_SERVER_PROPERTIES: 'true'
     tty: true
     stdin_open: true
     restart: always
