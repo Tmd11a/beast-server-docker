@@ -46,8 +46,9 @@ services:
       OPS: "Tusset"
       MAX_PLAYERS: 12
       SPAWN_PROTECTION: 3
-      SEED: -9027231461036664813gi
+      SEED: -9027231461036664813
       OVERRIDE_SERVER_PROPERTIES: 'true'
+      MOTD: "Docker Minecraft, hell yeah brother"
     tty: true
     stdin_open: true
     restart: always
