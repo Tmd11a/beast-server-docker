@@ -41,8 +41,8 @@ services:
     volumes:
       - "/mnt/disk1/mc:/data"
     environment:
-      EULA: 'true'
-    restart: on-failure
+      EULA: "true"
+    restart: "no"
 
   # couchpotato:
   #   image: linuxserver/couchpotato
