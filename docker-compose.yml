@@ -10,7 +10,6 @@ services:
       - /mnt/storage:/data
     network_mode: host
     restart: always
-    env_file: docker-variables.env
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -40,8 +39,8 @@ services:
     volumes:
       - "/mnt/disk1/mc:/data"
     environment:
-      - EULA=true
-      - OVERRIDE_SERVER_PROPERTIES=true
+      - EULA="true"
+      - OVERRIDE_SERVER_PROPERTIES="true"
       - PLAYER_IDLE_TIMEOUT=60
       - MEMORY=4G
       - SPAWN_PROTECTION=3
