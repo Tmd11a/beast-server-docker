@@ -41,14 +41,13 @@ services:
     volumes:
       - "/mnt/disk1/mc:/data"
     environment:
-      EULA: 'true'
-      DIFFICULTY: "hard"
-      OPS: "Tusset"
-      MAX_PLAYERS: 12
-      SPAWN_PROTECTION: 3
-      SEED: -9027231461036664813
-      OVERRIDE_SERVER_PROPERTIES: 'true'
-      MOTD: "Docker Minecraft, hell yeah brother"
+      - EULA
+      - OVERRIDE_SERVER_PROPERTIES
+      - OPS
+      - MAX_PLAYERS
+      - DIFFICULTY
+      - SPAWN_PROTECTION
+      - SEED
     tty: true
     stdin_open: true
     restart: always
