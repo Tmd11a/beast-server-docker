@@ -10,13 +10,13 @@ services:
       - /mnt/storage:/data
     network_mode: host
     restart: always
+    env_file: docker-variables.env
     environment:
-      - PUID
-      - PGID
+      - PUID=${PUID}
+      - PGID=${PGID}
   
   plexpy:
     container_name: plexpy-beast
-    env_file: docker-variables.env
     image: linuxserver/plexpy
     depends_on:
       - plex
@@ -29,52 +29,51 @@ services:
       - plex
     restart: always
     environment:
-      - PUID
-      - PGID
+      - PUID=${PUID}
+      - PGID=${PGID}
   
   minecraft:
     container_name: mc-beast
-    env_file: docker-variables.env
     image: itzg/minecraft-server
     ports:
       - "25565:25565"
     volumes:
       - "/mnt/disk1/mc:/data"
     environment:
-      - EULA
-      - OVERRIDE_SERVER_PROPERTIES
-      - OPS
-      - MAX_PLAYERS
-      - DIFFICULTY
-      - SPAWN_PROTECTION
-      - SEED
+      - EULA=true
+      - OVERRIDE_SERVER_PROPERTIES=true
+      - PLAYER_IDLE_TIMEOUT=60
+      - MEMORY=4G
+      - SPAWN_PROTECTION=3
+      - OPS=${OPS}
+      - MAX_PLAYERS=${MAX_PLAYERS}
+      - DIFFICULTY=${DIFFICULTY}
+      - SEED=${SEED}
+      - MOTD=${MOTD}
     tty: true
     stdin_open: true
     restart: always
 
   # couchpotato:
-  #   image: linuxserver/couchpotato
   #   container_name: couchpotato
-  #   environment:
-  #     - PUID
-  #     - PGID
-  #     - TZ
-  #     - UMASK_SET
+  #   image: linuxserver/couchpotato
   #   volumes:
   #     - /opt/appdata/couchpotato:/config
   #     - /mnt/disk2/downloads/couchpotato:/downloads
   #     - /mnt/disk3/movies:/movies
   #   ports:
   #     - 5050:5050
-  #   restart: unless-stopped
-  
-  # transmission:
-  #   image: linuxserver/transmission
-  #   container_name: transmission-beast
+  #   env_file: docker-variables.env
   #   environment:
   #     - PUID
   #     - PGID
   #     - TZ
+  #     - UMASK_SET
+  #   restart: unless-stopped
+
+  # transmission:
+  #   container_name: transmission-beast
+  #   image: linuxserver/transmission
   #   volumes:
   #     - /opt/appdata/transmission:/config
   #     - /mnt/disk2/downloads/transmission:/downloads
@@ -83,4 +82,8 @@ services:
   #     - 9091:9091
   #     - 51413:51413
   #     - 51413:51413/udp
+  #   environment:
+  #     - PUID
+  #     - PGID
+  #     - TZ
   #   restart: unless-stopped
