@@ -49,7 +49,7 @@ services:
       - MAX_PLAYERS=${MAX_PLAYERS}
       - DIFFICULTY=${DIFFICULTY}
       - SEED=${SEED}
-      - MOTD=Join Discord @ Hollywoo Gaming, powered by Docker
+      - MOTD=$MOTD}
     tty: true
     stdin_open: true
     restart: always
@@ -65,7 +65,8 @@ services:
       - "80:80/tcp"
       - "443:443/tcp"
     env_file:
-      - ../pass.env
+      - .env
+      - /opt/pass.env
     environment:
       - TZ=${TZ}
       - WEBPASSWORD=${WEBPASSWORD}
