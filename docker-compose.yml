@@ -68,7 +68,7 @@ services:
       - ../pass.env
     environment:
       - TZ=${TZ}
-      - WEBPASSWORD=$
+      - WEBPASSWORD=${WEBPASSWORD}
     volumes:
       - '/opt/appdata/etc-pihole/:/etc/pihole/'
       - '/opt/appdata/etc-dnsmasq.d/:/etc/dnsmasq.d/'
