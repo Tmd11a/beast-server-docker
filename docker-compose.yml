@@ -30,8 +30,9 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-  
-  minecraft:
+
+
+      minecraft:
     container_name: mc-beast
     image: itzg/minecraft-server
     ports:
@@ -39,8 +40,8 @@ services:
     volumes:
       - "/mnt/disk1/mc:/data"
     environment:
-      - EULA="true"
-      - OVERRIDE_SERVER_PROPERTIES="true"
+      - EULA='true'
+      - OVERRIDE_SERVER_PROPERTIES='true'
       - PLAYER_IDLE_TIMEOUT=60
       - MEMORY=4G
       - SPAWN_PROTECTION=3
@@ -48,10 +49,29 @@ services:
       - MAX_PLAYERS=${MAX_PLAYERS}
       - DIFFICULTY=${DIFFICULTY}
       - SEED=${SEED}
-      - MOTD=${MOTD}
+      - MOTD=Join Discord @ Hollywoo Gaming, powered by Docker
     tty: true
     stdin_open: true
     restart: always
+
+
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:latest
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - './etc-pihole/:/etc/pihole/'
+      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
 
   # couchpotato:
   #   container_name: couchpotato
