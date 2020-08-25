@@ -61,8 +61,8 @@ services:
       - "80:80/tcp"
       - "443:443/tcp"
     environment:
-      TZ=${TZ}
-      WEBPASSWORD=${PASS}
+      - TZ=${TZ}
+      - WEBPASSWORD=${PASS}
     volumes:
       - /opt/appdata/etc-pihole/:/etc/pihole/
       - /opt/appdata/etc-dnsmasq.d/:/etc/dnsmasq.d/
