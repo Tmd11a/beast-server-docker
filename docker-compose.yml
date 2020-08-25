@@ -40,16 +40,12 @@ services:
     volumes:
       - "/mnt/disk1/mc:/data"
     environment:
-      - EULA='true'
-      - OVERRIDE_SERVER_PROPERTIES='true'
-      - PLAYER_IDLE_TIMEOUT=60
-      - MEMORY=4G
-      - SPAWN_PROTECTION=3
-      - OPS=${OPS}
-      - MAX_PLAYERS=${MAX_PLAYERS}
-      - DIFFICULTY=${DIFFICULTY}
-      - SEED=${SEED}
-      - MOTD=$MOTD}
+      EULA: 'true'
+      PLAYER_IDLE_TIMEOUT: 30
+      DIFFICULTY: hard
+      OPS: Tusset
+      SEED: -9027231461036664813
+      MOTD: Join Discord @ Hollywoo Gaming, powered by Docker!
     tty: true
     stdin_open: true
     restart: always
@@ -57,22 +53,19 @@ services:
 
   pihole:
     container_name: pihole
-    image: pihole/pihole:latest
+    image: pihole/pihole
     ports:
       - "53:53/tcp"
       - "53:53/udp"
       - "67:67/udp"
       - "80:80/tcp"
       - "443:443/tcp"
-    env_file:
-      - .env
-      - /opt/pass.env
     environment:
-      - TZ=${TZ}
-      - WEBPASSWORD=${WEBPASSWORD}
+      TZ=${TZ}
+      WEBPASSWORD=${PASS}
     volumes:
-      - '/opt/appdata/etc-pihole/:/etc/pihole/'
-      - '/opt/appdata/etc-dnsmasq.d/:/etc/dnsmasq.d/'
+      - /opt/appdata/etc-pihole/:/etc/pihole/
+      - /opt/appdata/etc-dnsmasq.d/:/etc/dnsmasq.d/
     cap_add:
       - NET_ADMIN
     restart: unless-stopped
@@ -86,7 +79,6 @@ services:
   #     - /mnt/disk3/movies:/movies
   #   ports:
   #     - 5050:5050
-  #   env_file: docker-variables.env
   #   environment:
   #     - PUID
   #     - PGID
