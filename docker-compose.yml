@@ -41,6 +41,7 @@ services:
       - "/mnt/disk1/mc:/data"
     environment:
       EULA: 'true'
+      TZ: ${TZ}
       PLAYER_IDLE_TIMEOUT: 30
       DIFFICULTY: hard
       OPS: Tusset
