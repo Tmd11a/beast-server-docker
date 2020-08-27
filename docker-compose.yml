@@ -4,7 +4,7 @@ version: '3.4'
 services:
   plex:
     container_name: plex-beast
-    image: plexinc/pms-docker
+    image: plexinc/pms-docker:latest
     volumes:
       - /opt/appdata/plex:/config
       - /mnt/storage:/data
@@ -54,7 +54,7 @@ services:
 
   pihole:
     container_name: pihole
-    image: pihole/pihole
+    image: pihole/pihole:latest
     ports:
       - "53:53/tcp"
       - "53:53/udp"
@@ -62,6 +62,14 @@ services:
       - "80:80/tcp"
       - "443:443/tcp"
     environment:
+      - ServerIP=192.168.0.100
+      - PROXY_LOCATION=pihole
+      - VIRTUAL_HOST=pihole.beast.local
+      - VIRTUAL_PORT=80
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - DNS1=127.0.0.1
+      - DNS2=1.1.1.1
       - TZ=${TZ}
       - WEBPASSWORD=${PASS}
     volumes:
