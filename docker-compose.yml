@@ -45,7 +45,7 @@ services:
       TZ: ${TZ}
       PLAYER_IDLE_TIMEOUT: 30
       DIFFICULTY: hard
-      OPS: Tusset
+      OPS: ${ME}
       SEED: -9027231461036664813
       MOTD: Join Discord @ Hollywoo Gaming, powered by Docker!
     tty: true
@@ -62,11 +62,12 @@ services:
       - "67:67/udp"
       - "80:80/tcp"
       - "443:443/tcp"
+    dns:
+      - 127.0.0.1
+      - 1.1.1.1
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - DNS1=127.0.0.1
-      - DNS2=1.1.1.1
       - TZ=${TZ}
       - WEBPASSWORD=${PASS}
     volumes:
