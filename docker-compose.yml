@@ -3,7 +3,7 @@
 version: '3.4'
 services:
   plex:
-    container_name: plex-beast
+    container_name: plex
     image: plexinc/pms-docker:latest
     volumes:
       - /opt/appdata/plex:/config
@@ -15,7 +15,7 @@ services:
       - PGID=${PGID}
   
   plexpy:
-    container_name: plexpy-beast
+    container_name: plexpy
     image: linuxserver/plexpy
     depends_on:
       - plex
@@ -33,7 +33,7 @@ services:
 
 
   minecraft:
-    container_name: mc-beast
+    container_name: mc
     image: itzg/minecraft-server
     ports:
       - "25565:25565"
@@ -77,35 +77,35 @@ services:
       - NET_ADMIN
     restart: unless-stopped
 
-  # couchpotato:
-  #   container_name: couchpotato
-  #   image: linuxserver/couchpotato
-  #   volumes:
-  #     - /opt/appdata/couchpotato:/config
-  #     - /mnt/disk2/downloads/couchpotato:/downloads
-  #     - /mnt/disk3/movies:/movies
-  #   ports:
-  #     - 5050:5050
-  #   environment:
-  #     - PUID
-  #     - PGID
-  #     - TZ
-  #     - UMASK_SET
-  #   restart: unless-stopped
+  couchpotato:
+    container_name: couchpotato
+    image: linuxserver/couchpotato
+    volumes:
+      - /opt/appdata/couchpotato:/config
+      - /mnt/disk2/downloads/couchpotato:/downloads
+      - /mnt/disk3/movies:/movies
+    ports:
+      - 5050:5050
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK_SET=${UMASK}
+    restart: unless-stopped
 
-  # transmission:
-  #   container_name: transmission-beast
-  #   image: linuxserver/transmission
-  #   volumes:
-  #     - /opt/appdata/transmission:/config
-  #     - /mnt/disk2/downloads/transmission:/downloads
-  #     - /mnt/storage/movies:/movies
-  #   ports:
-  #     - 9091:9091
-  #     - 51413:51413
-  #     - 51413:51413/udp
-  #   environment:
-  #     - PUID
-  #     - PGID
-  #     - TZ
-  #   restart: unless-stopped
+  transmission:
+    container_name: transmission
+    image: linuxserver/transmission
+    volumes:
+      - /opt/appdata/transmission:/config
+      - /mnt/disk2/downloads/transmission:/downloads
+      - /mnt/storage/movies:/movies
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    restart: unless-stopped
