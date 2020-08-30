@@ -1,7 +1,7 @@
 # beast-server-docker
 Just a repo for my plex/minecraft/pihole and maybe whatever else I can use this server for.
 The intention of this is to learn more about Docker and running Plex/MC for friends.
-I hope to add more functionality to this. One of the next steps to setup rclone to backup the core of this server to the cloud (likely Google Drive)
+<br>I hope to add more functionality to this. One of the next steps to setup rclone to backup the core of this server to the cloud (likely Google Drive)
 
 
 One limitation was running this from my home, my public IP changes. <br>To solve this the server was setup using DuckDNS (Thanks to them, https://www.duckdns.org/) for free dynamic DNS.
