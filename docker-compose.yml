@@ -77,21 +77,23 @@ services:
       - NET_ADMIN
     restart: unless-stopped
 
-  couchpotato:
-    container_name: couchpotato
-    image: linuxserver/couchpotato
-    volumes:
-      - /opt/appdata/couchpotato:/config
-      - /mnt/disk2/downloads/couchpotato:/downloads
-      - /mnt/disk3/movies:/movies
-    ports:
-      - 5050:5050
+
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - UMASK_SET=${UMASK}
+      - UMASK_SET=022
+    volumes:
+      - /opt/appdata/radarr:/config
+      - /mnt/storage/movies:/movies
+      - /mnt/disk2/downloads/transmission:/downloads
+    ports:
+      - 7878:7878
     restart: unless-stopped
+
 
   transmission:
     container_name: transmission
