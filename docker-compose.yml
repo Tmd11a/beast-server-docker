@@ -82,6 +82,7 @@ services:
     image: linuxserver/radarr
     container_name: radarr
     environment:
+<<<<<<< HEAD
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
@@ -90,6 +91,16 @@ services:
       - /opt/appdata/radarr:/config
       - /mnt/storage/movies:/movies
       - /mnt/disk2/downloads/transmission:/downloads
+=======
+      - PUID={PUID}
+      - PGID={PGID}
+      - TZ={TZ}
+      - UMASK_SET=022
+    volumes:
+      - /opt/appdata/radarr:/config
+      - /mnt/disk2/downloads/radarr:/downloads
+      - /mnt/disk3/movies:/movies
+>>>>>>> 2f3e1fad5739dea40cdc54ba242fb98554a66e1a
     ports:
       - 7878:7878
     restart: unless-stopped
