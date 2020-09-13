@@ -46,7 +46,6 @@ services:
       PLAYER_IDLE_TIMEOUT: 30
       DIFFICULTY: hard
       OPS: ${ME}
-      SEED: -9027231461036664813
       MOTD: Join Discord @ Hollywoo Gaming, powered by Docker!
     tty: true
     stdin_open: true
@@ -82,16 +81,6 @@ services:
     image: linuxserver/radarr
     container_name: radarr
     environment:
-<<<<<<< HEAD
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - UMASK_SET=022
-    volumes:
-      - /opt/appdata/radarr:/config
-      - /mnt/storage/movies:/movies
-      - /mnt/disk2/downloads/transmission:/downloads
-=======
       - PUID={PUID}
       - PGID={PGID}
       - TZ={TZ}
@@ -100,7 +89,6 @@ services:
       - /opt/appdata/radarr:/config
       - /mnt/disk2/downloads/radarr:/downloads
       - /mnt/disk3/movies:/movies
->>>>>>> 2f3e1fad5739dea40cdc54ba242fb98554a66e1a
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -112,7 +100,7 @@ services:
     volumes:
       - /opt/appdata/transmission:/config
       - /mnt/disk2/downloads/transmission:/downloads
-      - /mnt/storage/movies:/movies
+      - /mnt/disk3/movies:/movies
     ports:
       - 9091:9091
       - 51413:51413
@@ -121,4 +109,24 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - UMASK_SET=022
+    restart: unless-stopped
+
+  qbittorrent:
+    container_name: qbittorrent
+    image: binhex/arch-qbittorrentvpn
+    volumes:
+      - /opt/appdata/qbittorrent:/config
+      - /mnt/disk2/downloads/qbittorrent:/downloads
+      - /mnt/disk3/movies:/movies
+    ports:
+      - 8080:8080 #webui
+      - 6881:6881
+      - 8118:8118
+      - 6881:6881/udp
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK_SET=022
     restart: unless-stopped
