@@ -87,24 +87,27 @@ services:
       - UMASK_SET=022
     volumes:
       - /opt/appdata/radarr:/config
-      - /mnt/disk2/downloads/radarr:/downloads
+      - /mnt/disk2/downloads:/downloads
       - /mnt/disk3/movies:/movies
     ports:
       - 7878:7878
     restart: unless-stopped
 
 
-  deluge:
-    image: linuxserver/deluge
-    container_name: deluge
-    network_mode: host
+  qbittorrent:
+    image: linuxserver/qbittorrent
+    container_name: qbittorrent
     environment:
-      - DELUGE_LOGLEVEL=error #optional
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - PUID={PUID}
+      - PGID={PGID}
+      - TZ={TZ}
       - UMASK_SET=022
+      - WEBUI_PORT=8080
     volumes:
-      - /opt/appdata/deluge:/config
-      - /mnt/disk2/downloads/deluge:/downloads
+      - /opt/appdata/qbittorrent:/config
+      - /mnt/disk2/downloads:/downloads
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 8080:8080
     restart: unless-stopped
