@@ -94,7 +94,7 @@ services:
     restart: unless-stopped
 
 
-    deluge:
+  deluge:
     image: linuxserver/deluge
     container_name: deluge
     network_mode: host
