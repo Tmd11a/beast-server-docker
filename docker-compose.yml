@@ -94,25 +94,7 @@ services:
     restart: unless-stopped
 
 
-  transmission:
-    container_name: transmission
-    image: linuxserver/transmission
-    volumes:
-      - /opt/appdata/transmission:/config
-      - /mnt/disk2/downloads/transmission:/downloads
-      - /mnt/disk3/movies:/movies
-    ports:
-      - 9091:9091
-      - 51413:51413
-      - 51413:51413/udp
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - UMASK_SET=022
-    restart: unless-stopped
-
-  deluge:
+    deluge:
     image: linuxserver/deluge
     container_name: deluge
     network_mode: host
@@ -125,5 +107,4 @@ services:
     volumes:
       - /opt/appdata/deluge:/config
       - /mnt/disk2/downloads/deluge:/downloads
-      - /mnt/disk3/movies:/movies
     restart: unless-stopped
