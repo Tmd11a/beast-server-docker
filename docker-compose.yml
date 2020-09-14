@@ -112,21 +112,18 @@ services:
       - UMASK_SET=022
     restart: unless-stopped
 
-  qbittorrent:
-    container_name: qbittorrent
-    image: binhex/arch-qbittorrentvpn
-    volumes:
-      - /opt/appdata/qbittorrent:/config
-      - /mnt/disk2/downloads/qbittorrent:/downloads
-      - /mnt/disk3/movies:/movies
-    ports:
-      - 8080:8080 #webui
-      - 6881:6881
-      - 8118:8118
-      - 6881:6881/udp
+  deluge:
+    image: linuxserver/deluge
+    container_name: deluge
+    network_mode: host
     environment:
+      - DELUGE_LOGLEVEL=error #optional
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
       - UMASK_SET=022
+    volumes:
+      - /opt/appdata/deluge:/config
+      - /mnt/disk2/downloads/deluge:/downloads
+      - /mnt/disk3/movies:/movies
     restart: unless-stopped
