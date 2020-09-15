@@ -78,7 +78,7 @@ services:
 
 
   radarr:
-    image: linuxserver/radarr
+    image: linuxserver/radarr:latest
     container_name: radarr
     environment:
       - PUID={PUID}
@@ -95,7 +95,7 @@ services:
 
 
   qbittorrent:
-    image: linuxserver/qbittorrent
+    image: linuxserver/qbittorrent:latest
     container_name: qbittorrent
     environment:
       - PUID={PUID}
