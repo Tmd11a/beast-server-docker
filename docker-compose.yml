@@ -3,33 +3,19 @@
 version: '3.4'
 services:
   plex:
+    image: linuxserver/plex:latest
     container_name: plex
-    image: plexinc/pms-docker:latest
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - VERSION=docker
+      - UMASK_SET=022
+      - PLEX_CLAIM=${CLAIM}
     volumes:
       - /opt/appdata/plex:/config
       - /mnt/storage:/data
-    network_mode: host
-    restart: always
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-  
-  plexpy:
-    container_name: plexpy
-    image: linuxserver/plexpy
-    depends_on:
-      - plex
-    volumes:
-      - /opt/appdata/plexpy:/config
-      - /opt/appdata/plex/Library/Application\ Support/Plex\ Media\ Server/Logs:/logs:ro
-    ports:
-      - 27029:8181
-    links:
-      - plex
-    restart: always
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
+    restart: unless-stopped
 
 
   minecraft:
@@ -81,9 +67,9 @@ services:
     image: linuxserver/radarr:latest
     container_name: radarr
     environment:
-      - PUID={PUID}
-      - PGID={PGID}
-      - TZ={TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
       - UMASK_SET=022
     volumes:
       - /opt/appdata/radarr:/config
@@ -93,13 +79,14 @@ services:
       - 7878:7878
     restart: unless-stopped
 
+
   sonarr:
-    image: linuxserver/sonarr
+    image: linuxserver/sonarr:latest
     container_name: sonarr
     environment:
-      - PUID={PUID}
-      - PGID={PGID}
-      - TZ={TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
       - UMASK_SET=022
     volumes:
       - /opt/appdata/sonarr:/config
@@ -114,9 +101,9 @@ services:
     image: linuxserver/qbittorrent:latest
     container_name: qbittorrent
     environment:
-      - PUID={PUID}
-      - PGID={PGID}
-      - TZ={TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
       - UMASK_SET=022
       - WEBUI_PORT=8080
     volumes:
@@ -127,3 +114,31 @@ services:
       - 6881:6881/udp
       - 8080:8080
     restart: unless-stopped
+
+  portainer:
+    image: portainer/portainer:latest
+    container_name: portainer
+    ports:
+      - 9000:9000
+    volumes:
+      - /opt/appdata/portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart:
+      always
+
+  # plexpy:
+  #   container_name: plexpy
+  #   image: linuxserver/plexpy
+  #   depends_on:
+  #     - plex
+  #   volumes:
+  #     - /opt/appdata/plexpy:/config
+  #     - /opt/appdata/plex/Library/Application\ Support/Plex\ Media\ Server/Logs:/logs:ro
+  #   ports:
+  #     - 27029:8181
+  #   links:
+  #     - plex
+  #   restart: always
+  #   environment:
+  #     - PUID=${PUID}
+  #     - PGID=${PGID}
