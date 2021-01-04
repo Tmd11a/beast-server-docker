@@ -24,7 +24,7 @@ services:
     ports:
       - "25565:25565"
     volumes:
-      - "/mnt/disk1/mc:/data"
+      - "/opt/appdata/mc:/data"
     environment:
       EULA: 'true'
       MEMORY: 3G
@@ -96,17 +96,6 @@ services:
       - 8989:8989
     restart: unless-stopped
 
-  portainer:
-    image: portainer/portainer:latest
-    container_name: portainer
-    ports:
-      - 9000:9000
-    volumes:
-      - /opt/appdata/portainer:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart:
-      always
-
   alpine-qbittorrent-openvpn:
     container_name: qbit-vpn
     image: guillaumedsde/alpine-qbittorrent-openvpn:latest
@@ -141,3 +130,15 @@ services:
     ports:
       - 9117:9117
     restart: unless-stopped
+
+
+  # portainer:
+  #   image: portainer/portainer:latest
+  #   container_name: portainer
+  #   ports:
+  #     - 9000:9000
+  #   volumes:
+  #     - /opt/appdata/portainer:/data
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   restart:
+  #     always
