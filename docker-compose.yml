@@ -37,6 +37,15 @@ services:
     stdin_open: true
     restart: always
 
+  factorio:
+    container_name: factorio
+    image: factoriotools/factorio:stable
+    ports:
+     - "34197:34197/udp"
+    volumes:
+     - /opt/appdata/factorio:/factorio
+    restart: always
+
 
   pihole:
     container_name: pihole
@@ -130,3 +139,15 @@ services:
     ports:
       - 9117:9117
     restart: unless-stopped
+  
+
+  portainer:
+    image: portainer/portainer:latest
+    container_name: portainer
+    ports:
+      - 9000:9000
+    volumes:
+      - /opt/appdata/portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart:
+      always
