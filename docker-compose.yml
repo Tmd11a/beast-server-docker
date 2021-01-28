@@ -142,7 +142,7 @@ services:
   
 
   portainer:
-    image: portainer/portainer:latest
+    image: portainer/portainer-ce:latest
     container_name: portainer
     ports:
       - 9000:9000
