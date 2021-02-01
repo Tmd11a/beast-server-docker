@@ -14,7 +14,7 @@ services:
       - PLEX_CLAIM=${CLAIM}
     volumes:
       - /opt/appdata/plex:/config
-      - /mnt/zbeast:/data
+      - /mnt/zbeast/media:/data
     restart: unless-stopped
 
 
