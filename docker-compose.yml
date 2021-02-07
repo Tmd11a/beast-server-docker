@@ -49,14 +49,14 @@ services:
 
   starbound:
     container_name: starbound
-    image: didstopia/starbound-server
+    image: lacsap/starbound
     ports:
      - 21025:21025
     environment:
       - STEAM_USERNAME=${STUSER}
       - STEAM_PASSWORD=${STPASS}
     volumes:
-     - /opt/appdata/starbound:/steamcmd/starbound
+     - /opt/appdata/starbound:/server/steamcmd/starbound
     restart: always
 
 
