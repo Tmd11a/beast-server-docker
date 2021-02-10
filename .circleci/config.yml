@@ -1,21 +1,9 @@
-version: 2.1
-
-orbs:
-  python: circleci/python@0.2.1
-
+version: 2 # CircleCI version
 jobs:
-  build-and-test:
-    executor: python/default
-    steps:
-      - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
-      - run:
-          command: ./manage.py test
-          name: Test
+  build:
+    machine: true                   # Use a Linux VM instead of docker environment
+    working_directory: ~/repo       # Default working directory, where your project will be cloned
 
-workflows:
-  main:
-    jobs:
-      - build-and-test
+    steps:
+        - checkout
+        - run: docker-compose up -d
