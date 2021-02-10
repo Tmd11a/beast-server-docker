@@ -1,6 +1,6 @@
 # /opt/docker-compose.yml
 ---
-version: '2.4'
+version: '3.0'
 services:
   plex:
     image: linuxserver/plex:latest

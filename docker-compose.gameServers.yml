@@ -1,6 +1,6 @@
 # /opt/docker-gameServers.yml
 ---
-version: '2.4'
+version: '3.0'
 services:
   minecraft:
       container_name: mc
