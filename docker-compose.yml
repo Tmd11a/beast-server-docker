@@ -194,7 +194,7 @@ services:
     environment:
       TZ: ${TZ}
       NAME: "Hollywoo Gaming"
-      WORLD: "bojackhorseman"
+      WORLD: "bojack"
       PORT: "2456"
       PUBLIC: "1"
       PASSWORD: ${VALPASS}
