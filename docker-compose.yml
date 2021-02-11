@@ -185,6 +185,7 @@ services:
 
 
   valheim:
+    container_name: valheim
     image: mbround18/valheim:latest
     ports:
       - 2456:2456/udp
