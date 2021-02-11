@@ -142,3 +142,62 @@ services:
     restart:
       always
 
+# Game servers
+  minecraft:
+      container_name: mc
+      image: itzg/minecraft-server
+      ports:
+        - 25565:25565
+      volumes:
+        - /opt/appdata/mc:/data
+      environment:
+        EULA: 'true'
+        MEMORY: 3G
+        TZ: ${TZ}
+        PLAYER_IDLE_TIMEOUT: 30
+        DIFFICULTY: hard
+        OPS: ${ME}
+        MOTD: Join Discord @ Hollywoo Gaming, powered by Docker!
+      tty: true
+      stdin_open: true
+      restart: always
+
+  # factorio:
+  #   container_name: factorio
+  #   image: factoriotools/factorio:stable
+  #   ports:
+  #   - 34197:34197/udp
+  #   volumes:
+  #   - /opt/appdata/factorio:/factorio
+  #   restart: always
+
+  starbound:
+    container_name: starbound
+    image: lacsap/starbound
+    ports:
+    - 21025:21025
+    environment:
+      - STEAM_USERNAME=${STUSER}
+      - STEAM_PASSWORD=${STPASS}
+    volumes:
+    - /opt/appdata/starbound:/server/steamcmd/starbound
+    restart: always
+
+
+  valheim:
+    image: mbround18/valheim:latest
+    ports:
+      - 2456:2456/udp
+      - 2457:2457/udp
+      - 2458:2458/udp
+    environment:
+      TZ: ${TZ}
+      NAME: "Hollywoo Gaming"
+      WORLD: "bojackhorseman"
+      PORT: "2456"
+      PUBLIC: "1"
+      PASSWORD: ${VALPASS}
+      AUTO_UPDATE: "0"     
+    volumes:
+    - /opt/appdata/valheim/saves:/home/steam/.config/unity3d/IronGate/Valheim
+    - /opt/appdata/valheim:/home/steam/valheim
