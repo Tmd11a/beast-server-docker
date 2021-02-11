@@ -152,7 +152,7 @@ services:
         - /opt/appdata/mc:/data
       environment:
         EULA: 'true'
-        MEMORY: 3G
+        MEMORY: 1G
         TZ: ${TZ}
         PLAYER_IDLE_TIMEOUT: 30
         DIFFICULTY: hard
