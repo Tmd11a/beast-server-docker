@@ -125,7 +125,7 @@ services:
   grafana:
       image: grafana/grafana
       container_name: grafana
-      user: "1000"
+      # user: "1000"
       ports:
         - 3001:3000
       volumes:
@@ -172,7 +172,7 @@ services:
   #   restart: always
 
   starbound:
-    container_name: starbound
+    container_name: sb
     image: lacsap/starbound
     ports:
     - 21025:21025
@@ -185,7 +185,7 @@ services:
 
 
   valheim:
-    container_name: valheim
+    container_name: val
     image: mbround18/valheim:latest
     ports:
       - 2456:2456/udp
