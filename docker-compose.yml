@@ -16,6 +16,19 @@ services:
       - /opt/appdata/plex:/config
       - /mnt/zbeast/media:/data
     restart: unless-stopped
+  
+  tautulli:
+    image: tautulli/tautulli
+    container_name: tautulli
+    restart: unless-stopped
+    volumes:
+      - /opt/appdata/plex:/config
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    ports:
+      - 8181:8181
 
   pihole:
     container_name: pihole
@@ -142,7 +155,7 @@ services:
     restart:
       always
 
-# Game servers
+# ----------------- Game servers ----------------- #
   minecraft:
       container_name: mc
       image: itzg/minecraft-server
@@ -162,15 +175,6 @@ services:
       stdin_open: true
       restart: always
 
-  # factorio:
-  #   container_name: factorio
-  #   image: factoriotools/factorio:stable
-  #   ports:
-  #   - 34197:34197/udp
-  #   volumes:
-  #   - /opt/appdata/factorio:/factorio
-  #   restart: always
-
   starbound:
     container_name: sb
     image: lacsap/starbound
@@ -182,7 +186,6 @@ services:
     volumes:
     - /opt/appdata/starbound:/server/steamcmd/starbound
     restart: always
-
 
   valheim:
     container_name: val
@@ -202,3 +205,12 @@ services:
     volumes:
     - /opt/appdata/valheim/saves:/home/steam/.config/unity3d/IronGate/Valheim
     - /opt/appdata/valheim:/home/steam/valheim
+
+  # factorio:
+  #   container_name: factorio
+  #   image: factoriotools/factorio:stable
+  #   ports:
+  #   - 34197:34197/udp
+  #   volumes:
+  #   - /opt/appdata/factorio:/factorio
+  #   restart: always
