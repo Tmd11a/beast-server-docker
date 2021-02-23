@@ -155,7 +155,7 @@ services:
       always
   
     telegraf:
-     image: telegraf
+    image: telegraf
     container_name: telegraf
     ports:
       - 8094:8094
