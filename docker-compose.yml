@@ -154,7 +154,7 @@ services:
     restart:
       always
   
-    telegraf:
+  telegraf:
     image: telegraf
     container_name: telegraf
     ports:
