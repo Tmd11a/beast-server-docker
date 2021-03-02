@@ -20,7 +20,7 @@ services:
       - 9090:9090
 
   nodeexporter:
-    image: prom/node-exporter:v1.1.1
+    image: prom/node-exporter
     container_name: nodeexporter
     volumes:
       - /proc:/host/proc:ro
@@ -38,7 +38,7 @@ services:
   grafana:
     image: grafana/grafana
     container_name: grafana
-    user: "472"
+    user: "1000"
     volumes:
       - /opt/appdata/grafana:/var/lib/grafana
     environment:
