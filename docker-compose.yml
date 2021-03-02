@@ -7,7 +7,7 @@ services:
     container_name: prometheus
     volumes:
       - /opt/appdata/prometheus:/etc/prometheus
-      - prometheus_data:/prometheus
+      - /opt/appdata/prometheus/data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
