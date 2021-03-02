@@ -38,7 +38,7 @@ services:
   grafana:
     image: grafana/grafana
     container_name: grafana
-    user: 472
+    user: "472"
     volumes:
       - /opt/appdata/grafana:/var/lib/grafana
     environment:
