@@ -2,6 +2,53 @@
 ---
 version: '3.0'
 services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - /opt/appdata/prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    restart: always
+    ports:
+      - 9090:9090
+
+  nodeexporter:
+    image: prom/node-exporter:v1.1.1
+    container_name: nodeexporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    restart: always
+    ports:
+      - 9100:9100
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    user: 472
+    volumes:
+      - /opt/appdata/grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=${NAME}
+      - GF_SECURITY_ADMIN_PASSWORD=${PASS}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    restart: always
+    ports:
+      - 3000:3000
+
   plex:
     image: linuxserver/plex:latest
     container_name: plex
@@ -16,19 +63,6 @@ services:
       - /opt/appdata/plex:/config
       - /mnt/zbeast/media:/data
     restart: unless-stopped
-  
-  tautulli:
-    image: tautulli/tautulli
-    container_name: tautulli
-    restart: unless-stopped
-    volumes:
-      - /opt/appdata/plex:/config
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    ports:
-      - 8181:8181
 
   pihole:
     container_name: pihole
@@ -132,49 +166,6 @@ services:
     restart:
       always
 
-# ----------------- TIG Monitor Stack ----------------- #
-
-  grafana:
-      image: grafana/grafana
-      container_name: grafana
-      ports:
-        - 3000:3000
-      volumes:
-        - /opt/appdata/grafana:/var/lib/grafana
-      restart:
-        always
-  
-  influxdb:
-    image: influxdb:latest
-    container_name: influxdb
-    ports:
-      - 8086:8086
-    volumes:
-      - /opt/appdata/influxdb:/var/lib/influxdb
-    restart:
-      always
-  
-  telegraf:
-    image: telegraf:1.16.3
-    container_name: telegraf
-    ports:
-      - 8094:8094
-      - "8092:8092/udp"
-      - "8125:8125/udp"
-    environment:
-      - HOST_PROC=/rootfs/proc
-      - HOST_SYS=/root/sys
-      - HOST_ETC=/root/etc
-    volumes:
-      - /opt/appdata/telegraf:/etc/telegraf/
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /sys:/rootfs/sys
-      - /proc:/rootfs/proc
-      - /etc:/rootfs/etc
-    links:
-      - influxdb
-    restart: always
-
 # ----------------- Game servers ----------------- #
   minecraft:
       container_name: mc
@@ -215,13 +206,21 @@ services:
       - 2457:2457/udp
       - 2458:2458/udp
     environment:
-      TZ: ${TZ}
-      NAME: "Hollywoo Gaming"
-      WORLD: "bojack"
-      PORT: "2456"
-      PUBLIC: "1"
-      PASSWORD: ${VALPASS}
-      AUTO_UPDATE: "0"     
+      - TZ=${TZ}
+      - NAME="Hollywoo Gaming"
+      - WORLD="todchavez"
+      - PORT=2456
+      - PUBLIC=1
+      - PASSWORD=${VALPASS}
+      - AUTO_UPDATE=1     
+      - AUTO_UPDATE_SCHEDULE="30 4 * * *"
+      - AUTO_BACKUP=1
+      - AUTO_BACKUP_SCHEDULE="*/15 * * * *"
+      - AUTO_BACKUP_REMOVE_OLD=1
+      - AUTO_BACKUP_DAYS_TO_LIVE=3
+      - AUTO_BACKUP_ON_UPDATE=1
+      - AUTO_BACKUP_ON_SHUTDOWN=1
     volumes:
     - /opt/appdata/valheim/saves:/home/steam/.config/unity3d/IronGate/Valheim
     - /opt/appdata/valheim:/home/steam/valheim
+    - /mnt/disk2/valheim-backups:/home/steam/backups
